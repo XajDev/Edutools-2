@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en" data-page="weather">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="../512.ico?v=2">
+    <link rel="apple-touch-icon" href="../512.ico?v=2">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Weather — EduTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+        .wx-wrap {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: grid;
+            gap: 1rem
+        }
+        
+        .wx-card {
+            padding: 1rem;
+            border: 1px solid #ffffff14;
+            border-radius: 18px;
+            background: #0b121a;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+            display: grid;
+            gap: 1rem
+        }
+        
+        .wx-top {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: .75rem;
+            align-items: center
+        }
+        
+        .wx-controls {
+            display: grid;
+            grid-template-columns: minmax(160px, 260px) auto auto;
+            gap: .6rem;
+            align-items: center
+        }
+        
+        #q {
+            padding: .9rem .8rem;
+            border-radius: 12px;
+            border: 1px solid #ffffff22;
+            background: #0f141c;
+            color: #fff
+        }
+        
+        .btn {
+            font: 600 1rem var(--sans);
+            padding: .7rem .9rem;
+            border-radius: 12px;
+            border: 1px solid #ffffff22;
+            background: linear-gradient(180deg, #121a24, #0b121a);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .35);
+            -webkit-tap-highlight-color: transparent;
+            transition: transform .06s ease, box-shadow .08s ease
+        }
+        
+        .btn.primary {
+            background: linear-gradient(180deg, #0e3d74, #0b315c);
+            border-color: #68b5ff77
+        }
+        
+        .btn.ghost {
+            background: transparent
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .4)
+        }
+        
+        @media(hover:hover) {
+            .btn:hover {
+                box-shadow: 0 8px 24px rgba(0, 0, 0, .45), 0 0 12px #00aaffaa, 0 0 26px #00aaff55;
+                transform: translateY(-1px)
+            }
+        }
+        
+        .wx-now {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem
+        }
+        
+        .wx-main {
+            display: flex;
+            flex-direction: column;
+            gap: .3rem;
+            background: #0f141c;
+            border: 1px solid #ffffff12;
+            border-radius: 14px;
+            padding: 1rem
+        }
+        
+        .wx-main h2 {
+            margin: 0;
+            font-size: 1.3rem
+        }
+        
+        .wx-temp {
+            font: 700 2.4rem var(--mono)
+        }
+        
+        .muted {
+            opacity: .8
+        }
+        
+        .wx-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: .6rem
+        }
+        
+        .wx-pill {
+            background: #0f141c;
+            border: 1px solid #ffffff12;
+            border-radius: 12px;
+            padding: .6rem;
+            text-align: center
+        }
+        
+        .wx-7 {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: .6rem
+        }
+        
+        .wx-day {
+            background: #0f141c;
+            border: 1px solid #ffffff12;
+            border-radius: 12px;
+            padding: .6rem;
+            display: grid;
+            gap: .25rem;
+            text-align: center
+        }
+        
+        .wx-big {
+            font: 700 1.2rem var(--mono)
+        }
+        
+        .wx-loc {
+            opacity: .85
+        }
+        
+        .wx-status {
+            justify-self: end;
+            opacity: .8
+        }
+        
+        @media(max-width:720px) {
+            .wx-7 {
+                grid-template-columns: repeat(3, 1fr)
+            }
+            .wx-now {
+                grid-template-columns: 1fr
+            }
+            .wx-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <h1>Weather</h1>
+        <nav class="top-nav"><a href="../index.html">Home</a></nav>
+    </header>
+
+    <main class="page">
+        <div class="wx-wrap">
+            <section class="wx-card">
+                <div class="wx-top">
+                    <div class="wx-controls">
+                        <input id="q" class="input" placeholder="City or place…" />
+                        <button id="search" class="btn primary">Search</button>
+                        <button id="myloc" class="btn">Use My Location</button>
+                    </div>
+                    <span id="status" class="badge wx-status">Idle</span>
+                </div>
+
+                <div class="wx-now">
+                    <div class="wx-main">
+                        <h2><span id="loc" class="wx-loc">—</span></h2>
+                        <div class="wx-temp" id="nowTemp">—</div>
+                        <div id="nowDesc" class="muted">—</div>
+                        <div class="muted">Feels like <span id="nowFeels">—</span> • Humidity <span id="nowHum">—</span> • Wind <span id="nowWind">—</span></div>
+                    </div>
+                    <div class="wx-grid">
+                        <div class="wx-pill">Rain today<br><span id="nowRain" class="wx-big">—</span></div>
+                        <div class="wx-pill">Today’s High<br><span id="hi" class="wx-big">—</span></div>
+                        <div class="wx-pill">Today’s Low<br><span id="lo" class="wx-big">—</span></div>
+                        <div class="wx-pill">Condition<br><span id="nowIcon" class="wx-big">—</span></div>
+                    </div>
+                </div>
+
+                <h3>Next 7 Days</h3>
+                <div id="days" class="wx-7" aria-live="polite"></div>
+            </section>
+        </div>
+    </main>
+
+    <script defer src="../assets/js/main.js"></script>
+    <script defer src="../assets/js/weather.js"></script>
+</body>
+
+</html>

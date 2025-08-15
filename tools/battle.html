@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en" data-page="battle">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="../512.ico?v=2">
+    <link rel="apple-touch-icon" href="../512.ico?v=2">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Lane Battle — EduTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+        /* Flat, no hover-card vibe */
+        
+        body {
+            background: #0b121a;
+            color: #fff;
+        }
+        
+        .wrap {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 12px;
+            display: grid;
+            gap: 12px;
+        }
+        
+        header,
+        .bar,
+        .ui {
+            border: 1px solid #ffffff16;
+            background: #0f141c;
+            border-radius: 12px;
+            padding: 10px;
+        }
+        
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .small {
+            opacity: .85;
+        }
+        
+        .row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .input {
+            padding: .7rem .9rem;
+            border: 1px solid #ffffff22;
+            border-radius: 10px;
+            background: #0b121a;
+            color: #fff;
+        }
+        
+        .btn {
+            padding: .7rem 1rem;
+            border-radius: 10px;
+            border: 1px solid #ffffff22;
+            background: #0e3d74;
+        }
+        
+        .btn.alt {
+            background: #123a24;
+        }
+        
+        .btn.warn {
+            background: #5d2b2b;
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        #game {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ffffff22;
+            border-radius: 12px;
+            background: #081018;
+            display: block;
+        }
+        
+        .ui {
+            display: grid;
+            gap: 8px;
+        }
+        
+        .bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .money {
+            font: 700 1.1rem var(--mono, ui-monospace, Consolas, monospace);
+        }
+        
+        .laneBtns {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .laneBtns .btn {
+            width: 100%;
+        }
+        
+        .units {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .units .btn {
+            width: 100%;
+        }
+        
+        .hint {
+            opacity: .8;
+            font-size: .9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="row">
+            <strong>Lane Battle (Online)</strong>
+            <span id="status" class="small">Idle</span>
+        </div>
+        <nav class="row">
+            <a class="btn alt" href="../index.html">Home</a>
+        </nav>
+    </header>
+
+    <main class="wrap">
+        <section class="bar">
+            <div class="row" style="justify-content:space-between; width:100%">
+                <div class="row">
+                    <input id="nick" class="input" placeholder="Nickname" maxlength="20" style="width:160px">
+                    <button id="quick" class="btn">Quick Match</button>
+                    <input id="room" class="input" placeholder="Room code" maxlength="24" style="width:140px">
+                    <button id="join" class="btn alt">Join Room</button>
+                    <button id="leave" class="btn warn">Leave</button>
+                </div>
+                <div class="row">
+                    <span class="money">💰 <span id="gold">0</span></span>
+                    <span class="small">You: <b id="you">—</b> • Foe: <b id="foe">—</b></span>
+                </div>
+            </div>
+        </section>
+
+        <canvas id="game" width="960" height="540" aria-label="Battlefield"></canvas>
+
+        <section class="ui">
+            <div class="row" style="justify-content:space-between">
+                <div class="units">
+                    <button class="btn" data-unit="peon">Peon (10)</button>
+                    <button class="btn" data-unit="swift">Swift (15)</button>
+                    <button class="btn" data-unit="tank">Tank (25)</button>
+                </div>
+                <div class="laneBtns">
+                    <button class="btn" data-lane="0">Lane A</button>
+                    <button class="btn" data-lane="1">Lane B</button>
+                    <button class="btn" data-lane="2">Lane C</button>
+                </div>
+            </div>
+            <div class="hint">Tap a unit, then a lane (or press 1/2/3 for lanes). Earn gold over time. Destroy the enemy tower to win!</div>
+        </section>
+    </main>
+
+    <script defer src="../assets/js/battle.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en" data-page="minesweeper">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="../512.ico?v=2">
+    <link rel="apple-touch-icon" href="../512.ico?v=2">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Minesweeper — EduTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+        .wrap {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: grid;
+            gap: 1rem
+        }
+        
+        .card {
+            padding: 1rem;
+            border: 1px solid #ffffff14;
+            border-radius: 18px;
+            background: #0b121a;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+            display: grid;
+            gap: 1rem
+        }
+        
+        .top {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: .75rem;
+            align-items: center
+        }
+        
+        .controls {
+            display: flex;
+            gap: .6rem;
+            flex-wrap: wrap;
+            align-items: center
+        }
+        
+        .input,
+        .btn {
+            padding: .7rem .9rem;
+            border-radius: 12px;
+            border: 1px solid #ffffff22;
+            background: linear-gradient(180deg, #121a24, #0b121a);
+            color: #fff
+        }
+        
+        .btn.primary {
+            background: linear-gradient(180deg, #0e3d74, #0b315c);
+            border-color: #68b5ff77
+        }
+        
+        .badge {
+            padding: .35rem .6rem;
+            border: 1px solid #ffffff22;
+            border-radius: 12px;
+            background: #0f141c
+        }
+        
+        .grid {
+            --cell: 38px;
+            display: grid;
+            gap: 6px;
+            justify-content: center
+        }
+        
+        .cell {
+            width: var(--cell);
+            height: var(--cell);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font: 700 1.1rem var(--mono);
+            border: 1px solid #ffffff22;
+            border-radius: 10px;
+            background: #0f141c;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .25) inset;
+        }
+        
+        .cell.revealed {
+            background: #0b121a;
+            border-color: #ffffff14;
+            box-shadow: none
+        }
+        
+        .cell.flag {
+            background: #0f141c;
+            position: relative
+        }
+        
+        .cell.flag::after {
+            content: "🚩";
+            position: absolute;
+            font-size: 1.1rem
+        }
+        
+        .cell.mine.revealed {
+            background: #3a0d13
+        }
+        
+        .nums-1 {
+            color: #68b5ff
+        }
+        
+        .nums-2 {
+            color: #6ef3a1
+        }
+        
+        .nums-3 {
+            color: #ffd166
+        }
+        
+        .nums-4 {
+            color: #ff9ecd
+        }
+        
+        .nums-5 {
+            color: #ffa46e
+        }
+        
+        .nums-6 {
+            color: #ae9cff
+        }
+        
+        .nums-7 {
+            color: #e0e0e0
+        }
+        
+        .nums-8 {
+            color: #999
+        }
+        
+        .status {
+            justify-self: end;
+            opacity: .85
+        }
+        
+        @media (max-width:720px) {
+            .grid {
+                --cell: 44px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <h1>Minesweeper</h1>
+        <nav class="top-nav"><a href="../index.html">Home</a></nav>
+    </header>
+
+    <main class="page">
+        <div class="wrap">
+            <section class="card">
+                <div class="top">
+                    <div class="controls">
+                        <select id="difficulty" class="input">
+            <option value="8x8x10">Beginner (8×8, 10 mines)</option>
+            <option value="12x12x24">Intermediate (12×12, 24 mines)</option>
+            <option value="16x16x40" selected>Expert (16×16, 40 mines)</option>
+            <option value="20x20x70">Insane (20×20, 70 mines)</option>
+          </select>
+                        <button id="restart" class="btn">Restart</button>
+                        <button id="flagMode" class="btn">Flag Mode: Off</button>
+                    </div>
+                    <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center">
+                        <span class="badge">Mines: <b id="mineCount">0</b></span>
+                        <span class="badge">Flags: <b id="flagsLeft">0</b></span>
+                        <span class="badge">Time: <b id="timer">0</b>s</span>
+                        <span id="status" class="badge status">Ready</span>
+                    </div>
+                </div>
+
+                <div id="board" class="grid" aria-label="Minesweeper board"></div>
+            </section>
+        </div>
+    </main>
+
+    <script defer src="../assets/js/main.js"></script>
+    <script defer src="../assets/js/minesweeper.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" data-page="g2048">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="../512.ico?v=2">
+    <link rel="apple-touch-icon" href="../512.ico?v=2">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>2048 — EduTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .wrap {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 1rem
+        }
+        
+        .card {
+            padding: 1rem;
+            border: 1px solid #ffffff14;
+            border-radius: 18px;
+            background: #0b121a;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .35)
+        }
+        
+        .bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: .8rem
+        }
+        
+        .badge {
+            padding: .35rem .6rem;
+            border: 1px solid #ffffff22;
+            border-radius: 12px;
+            background: #0f141c
+        }
+        
+        .btn {
+            padding: .7rem .9rem;
+            border-radius: 12px;
+            border: 1px solid #ffffff22;
+            background: linear-gradient(180deg, #121a24, #0b121a)
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: .5rem
+        }
+        
+        .cell {
+            aspect-ratio: 1/1;
+            border-radius: 12px;
+            background: #0f141c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font: 700 1.6rem var(--mono);
+            border: 1px solid #ffffff22
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <h1>2048</h1>
+        <nav class="top-nav"><a href="../index.html">Home</a></nav>
+    </header>
+    <main class="page">
+        <div class="wrap">
+            <section class="card">
+                <div class="bar">
+                    <span class="badge">Score: <b id="score">0</b></span>
+                    <button id="restart" class="btn">Restart</button>
+                </div>
+                <div id="grid" class="grid"></div>
+            </section>
+        </div>
+    </main>
+    <script src="../assets/js/2048.js"></script>
+</body>
+
+</html>

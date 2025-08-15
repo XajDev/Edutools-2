@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en" data-page="maps">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="../512.ico?v=2">
+    <link rel="apple-touch-icon" href="../512.ico?v=2">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Maps — EduTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <!-- Leaflet CSS (OSM) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <style>
+        .maps-wrap {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: grid;
+            gap: 1rem
+        }
+        
+        .maps-card {
+            padding: 1rem;
+            border: 1px solid #ffffff14;
+            border-radius: 18px;
+            background: #0b121a;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+            display: grid;
+            gap: 1rem
+        }
+        
+        .top {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: .75rem;
+            align-items: center
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: minmax(160px, 280px) auto auto auto;
+            gap: .6rem
+        }
+        
+        .btn {
+            font: 600 1rem var(--sans);
+            padding: .7rem .9rem;
+            border-radius: 12px;
+            border: 1px solid #ffffff22;
+            background: linear-gradient(180deg, #121a24, #0b121a);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .35);
+            -webkit-tap-highlight-color: transparent;
+            transition: transform .06s ease, box-shadow .08s ease
+        }
+        
+        .btn.primary {
+            background: linear-gradient(180deg, #0e3d74, #0b315c);
+            border-color: #68b5ff77
+        }
+        
+        .btn.ghost {
+            background: transparent
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .4)
+        }
+        
+        @media(hover:hover) {
+            .btn:hover {
+                box-shadow: 0 8px 24px rgba(0, 0, 0, .45), 0 0 12px #00aaffaa, 0 0 26px #00aaff55;
+                transform: translateY(-1px)
+            }
+        }
+        
+        #q {
+            padding: .9rem .8rem;
+            border-radius: 12px;
+            border: 1px solid #ffffff22;
+            background: #0f141c;
+            color: #fff
+        }
+        
+        .status {
+            justify-self: end;
+            opacity: .85
+        }
+        
+        .modebar {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap
+        }
+        
+        .modebtn.active {
+            border-color: #68b5ffaa;
+            box-shadow: 0 0 12px #00aaff99, 0 0 26px #00aaff55
+        }
+        
+        .mapwrap {
+            display: grid;
+            gap: .6rem
+        }
+        
+        #leafletWrap,
+        #gWrap {
+            border: 1px solid #ffffff12;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #0f141c
+        }
+        
+        #map {
+            width: 100%;
+            height: 460px
+        }
+        
+        #gFrame {
+            width: 100%;
+            height: 460px;
+            border: 0;
+            display: block
+        }
+        
+        .infobar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .6rem;
+            align-items: center
+        }
+        
+        .mono {
+            font-family: var(--mono)
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <h1>Maps</h1>
+        <nav class="top-nav"><a href="../index.html">Home</a></nav>
+    </header>
+
+    <main class="page">
+        <div class="maps-wrap">
+            <section class="maps-card">
+                <div class="top">
+                    <div class="controls">
+                        <input id="q" class="input" placeholder="Search place (city, landmark…)" />
+                        <button id="search" class="btn primary">Search</button>
+                        <button id="myloc" class="btn">Use My Location</button>
+                        <button id="clearPins" class="btn ghost">Clear Markers</button>
+                    </div>
+                    <span id="status" class="badge status">Idle</span>
+                </div>
+
+                <div class="modebar">
+                    <button id="modeOSM" class="btn modebtn active">OSM Map</button>
+                    <button id="modeSAT" class="btn modebtn">Google Satellite</button>
+                    <button id="openEarth" class="btn ghost">Open in Google Earth</button>
+                </div>
+
+                <div class="mapwrap">
+                    <div id="leafletWrap">
+                        <div id="map"></div>
+                    </div>
+                    <div id="gWrap" style="display:none"><iframe id="gFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+                </div>
+
+                <div class="infobar">
+                    <div>Center: <span id="coord" class="mono">—</span></div>
+                    <button id="copyCoord" class="btn ghost">Copy Coords</button>
+                    <button id="shareLink" class="btn ghost">Copy Share Link</button>
+                    <small id="hint" class="muted">Tip: tap/click the map to drop a marker.</small>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script defer src="../assets/js/main.js"></script>
+    <script defer src="../assets/js/maps.js"></script>
+</body>
+
+</html>

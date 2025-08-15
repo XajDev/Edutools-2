@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en" data-page="snake">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="../512.ico?v=2">
+    <link rel="apple-touch-icon" href="../512.ico?v=2">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Snake — EduTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+        /* Page-scoped tweaks */
+        
+        .snake-wrap {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: grid;
+            gap: 1rem
+        }
+        
+        .snake-card {
+            padding: 1rem;
+            border: 1px solid #ffffff14;
+            border-radius: 18px;
+            background: #0b121a;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+            display: grid;
+            gap: 1rem
+        }
+        
+        .topbar {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: .75rem;
+            align-items: center
+        }
+        
+        .stats {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap
+        }
+        
+        .badge {
+            padding: .35rem .6rem;
+            border: 1px solid #ffffff22;
+            border-radius: 12px;
+            background: #0f141c
+        }
+        
+        .controls {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap
+        }
+        
+        .board-wrap {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: .75rem;
+            align-items: center
+        }
+        
+        .board {
+            justify-self: center;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #ffffff22;
+            background: #0a0f16;
+            box-shadow: inset 0 0 0 2px #00000066;
+        }
+        
+        canvas {
+            display: block;
+            image-rendering: pixelated;
+        }
+        /* D-pad */
+        
+        .dpad {
+            display: grid;
+            gap: .5rem;
+            grid-template-columns: 64px 64px 64px;
+            justify-content: center;
+            align-items: center;
+            margin-top: .25rem
+        }
+        
+        .btn {
+            font: 600 1rem var(--sans);
+            padding: .7rem .9rem;
+            border-radius: 12px;
+            border: 1px solid #ffffff22;
+            background: linear-gradient(180deg, #121a24, #0b121a);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .35);
+            -webkit-tap-highlight-color: transparent;
+            transition: transform .06s ease, box-shadow .08s ease, background .12s ease;
+            touch-action: manipulation;
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .4)
+        }
+        
+        .btn.primary {
+            background: linear-gradient(180deg, #0e3d74, #0b315c);
+            border-color: #68b5ff77
+        }
+        
+        @media(hover:hover) {
+            .btn:hover {
+                box-shadow: 0 8px 24px rgba(0, 0, 0, .45), 0 0 12px #00aaffaa, 0 0 26px #00aaff55;
+                transform: translateY(-1px)
+            }
+        }
+        
+        .muted {
+            opacity: .8
+        }
+        
+        .status {
+            justify-self: end;
+            opacity: .85
+        }
+        
+        @media (min-width: 860px) {
+            .board-wrap {
+                grid-template-columns: auto 220px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <h1>Snake</h1>
+        <nav class="top-nav"><a href="../games.html">Back</a></nav>
+    </header>
+
+    <main class="page">
+        <div class="snake-wrap">
+            <section class="snake-card">
+                <div class="topbar">
+                    <div class="stats">
+                        <span class="badge">Score: <strong id="score">0</strong></span>
+                        <span class="badge">High: <strong id="best">0</strong></span>
+                        <span id="msg" class="badge muted">Tap a direction or press any arrow/WASD to start</span>
+                    </div>
+                    <div class="controls">
+                        <button id="pause" class="btn">Pause</button>
+                        <button id="restart" class="btn ghost">Restart</button>
+                        <!-- Easter egg button -->
+                        <button id="toasterEgg" class="btn ghost" title="Evil Toaster" aria-label="Angry Toaster">
+  <img src="../assets/img/toaster.png" alt="Toaster" style="width:64px;height:64px;vertical-align:middle" />
+</button>
+
+
+                    </div>
+                </div>
+
+                <div class="board-wrap">
+                    <div class="board">
+                        <!-- 24px cell size * 20 = 480px canvas (scales nicely on tablets) -->
+                        <canvas id="game" width="480" height="480"></canvas>
+                    </div>
+
+                    <!-- Touch D-pad -->
+                    <div>
+                        <div class="dpad">
+                            <div></div>
+                            <button id="up" class="btn primary">▲</button>
+                            <div></div>
+
+                            <button id="left" class="btn primary">◀</button>
+                            <div></div>
+                            <button id="right" class="btn primary">▶</button>
+
+                            <div></div>
+                            <button id="down" class="btn primary">▼</button>
+                            <div></div>
+                        </div>
+                        <div style="display:flex; gap:.5rem; justify-content:center; margin-top:.5rem">
+                            <button id="slow" class="btn ghost">Slow</button>
+                            <button id="normal" class="btn">Normal</button>
+                            <button id="fast" class="btn ghost">Fast</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script defer src="../assets/js/main.js"></script>
+    <script defer src="../assets/js/snake.js"></script>
+</body>
+
+</html>

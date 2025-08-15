@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" data-page="tictactoe">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="../512.ico?v=2">
+    <link rel="apple-touch-icon" href="../512.ico?v=2">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Tic‑Tac‑Toe — EduTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .wrap {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 1rem
+        }
+        
+        .card {
+            padding: 1rem;
+            border: 1px solid #ffffff14;
+            border-radius: 18px;
+            background: #0b121a;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .35)
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: .6rem
+        }
+        
+        .cell {
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font: 700 2.4rem var(--mono);
+            border: 1px solid #ffffff22;
+            border-radius: 14px;
+            background: #0f141c;
+            cursor: pointer
+        }
+        
+        .cell:active {
+            transform: translateY(1px)
+        }
+        
+        .bar {
+            display: flex;
+            gap: .6rem;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: .8rem
+        }
+        
+        .badge {
+            padding: .35rem .6rem;
+            border: 1px solid #ffffff22;
+            border-radius: 12px;
+            background: #0f141c
+        }
+        
+        .btn {
+            padding: .7rem .9rem;
+            border-radius: 12px;
+            border: 1px solid #ffffff22;
+            background: linear-gradient(180deg, #121a24, #0b121a)
+        }
+        
+        .btn.primary {
+            background: linear-gradient(180deg, #0e3d74, #0b315c);
+            border-color: #68b5ff77
+        }
+        
+        .win {
+            box-shadow: 0 0 16px #00aaff77
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <h1>Tic‑Tac‑Toe</h1>
+        <nav class="top-nav"><a href="../index.html">Home</a></nav>
+    </header>
+    <main class="page">
+        <div class="wrap">
+            <section class="card">
+                <div class="bar">
+                    <span class="badge">Turn: <b id="turn">X</b></span>
+                    <div><button id="restart" class="btn primary">Restart</button></div>
+                </div>
+                <div id="board" class="grid"></div>
+            </section>
+        </div>
+    </main>
+    <script src="../assets/js/tictactoe.js"></script>
+</body>
+
+</html>

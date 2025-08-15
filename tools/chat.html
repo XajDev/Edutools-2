@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" data-page="chat">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="../512.ico?v=2">
+    <link rel="apple-touch-icon" href="../512.ico?v=2">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Live Chat — EduTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+        /* scoped tweaks for this page only */
+        
+        .chat-wrap {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: grid;
+            gap: 1rem
+        }
+        
+        .chat-card {
+            padding: 1rem;
+            border: 1px solid #ffffff14;
+            border-radius: 18px;
+            background: #0b121a;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+            display: grid;
+            gap: 1rem
+        }
+        
+        .chat-log {
+            height: 56vh;
+            min-height: 320px;
+            overflow: auto;
+            border: 1px solid #ffffff1a;
+            border-radius: 14px;
+            padding: 10px;
+            background: #0f141c;
+            font: 500 1rem var(--mono);
+            line-height: 1.35;
+        }
+        
+        .chat-line {
+            margin: .12rem 0;
+            white-space: pre-wrap;
+            word-break: break-word
+        }
+        
+        .time {
+            opacity: .55;
+            margin-right: .35rem
+        }
+        
+        .name {
+            color: #68b5ff;
+            font-weight: 700;
+            margin-right: .35rem
+        }
+        
+        .sys {
+            opacity: .75;
+            font-style: italic
+        }
+        
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: .75rem
+        }
+        
+        .bar {
+            display: grid;
+            grid-template-columns: minmax(120px, 200px) 1fr auto;
+            gap: .6rem;
+            align-items: center;
+        }
+        
+        #nick {
+            padding: .8rem .8rem;
+            border-radius: 12px;
+            border: 1px solid #ffffff22;
+            background: #0f141c;
+            color: #fff
+        }
+        
+        #msg {
+            padding: 1rem .9rem;
+            border-radius: 12px;
+            border: 1px solid #ffffff22;
+            background: #0f141c;
+            color: #fff
+        }
+        
+        #send {
+            padding: 1rem 1.1rem;
+            border-radius: 14px
+        }
+        
+        .status {
+            justify-self: end;
+            opacity: .8
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <h1>Live Chat</h1>
+        <nav class="top-nav"><a href="../index.html">Home</a></nav>
+    </header>
+
+    <main class="page">
+        <div class="chat-wrap">
+            <section class="chat-card">
+                <div class="input-row">
+                    <div class="bar">
+                        <input id="nick" class="input" placeholder="Username" maxlength="24" />
+                        <input id="msg" class="input" placeholder="Type your message…" autocomplete="off" />
+                        <button id="send" class="primary">Send</button>
+                    </div>
+                    <span id="status" class="badge status">Connecting…</span>
+                </div>
+
+                <div id="chatLog" class="chat-log" aria-live="polite"></div>
+            </section>
+        </div>
+    </main>
+
+    <script defer src="../assets/js/main.js"></script>
+    <script defer src="../assets/js/chat.js"></script>
+</body>
+
+</html>

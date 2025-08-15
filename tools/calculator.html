@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en" data-page="calc">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="../512.ico?v=2">
+    <link rel="apple-touch-icon" href="../512.ico?v=2">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Calculator — EduTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+        /* Tablet-style layout scoped to this page */
+        
+        .calc-wrap {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .calc-header {
+            display: grid;
+            gap: .6rem;
+        }
+        
+        .calc-screen {
+            background: #0b121a;
+            border: 1px solid #ffffff22;
+            border-radius: 18px;
+            padding: 1rem 1rem;
+            min-height: 88px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, .35);
+        }
+        
+        .calc-history {
+            opacity: .6;
+            font-family: var(--mono);
+            font-size: .95rem;
+            min-height: 1.2em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .calc-input {
+            font-family: var(--mono);
+            font-size: 2rem;
+            line-height: 1.2;
+            text-align: right;
+            border: 0;
+            outline: none;
+            background: transparent;
+            color: #fff;
+            width: 100%;
+            caret-color: #68b5ff;
+            user-select: none;
+            /* we manage selection with tap */
+        }
+        
+        .calc-grid {
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: .75rem;
+        }
+        
+        .calc-btn {
+            font: 600 1.25rem var(--sans);
+            padding: 1.1rem .5rem;
+            border-radius: 16px;
+            border: 1px solid #ffffff20;
+            background: linear-gradient(180deg, #121a24, #0b121a);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+            transition: transform .06s ease, box-shadow .08s ease, background .12s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .calc-btn:active {
+            transform: translateY(1px) scale(0.995);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .4);
+            background: linear-gradient(180deg, #0f1821, #091018);
+        }
+        
+        .op {
+            background: linear-gradient(180deg, #163250, #10273c);
+            border-color: #68b5ff44;
+        }
+        
+        .op:active {
+            background: linear-gradient(180deg, #142c46, #0e2235);
+        }
+        
+        .accent {
+            background: linear-gradient(180deg, #0e3d74, #0b315c);
+            border-color: #68b5ff77;
+        }
+        
+        .accent:active {
+            background: linear-gradient(180deg, #0c3562, #092a4f);
+        }
+        
+        .warn {
+            background: linear-gradient(180deg, #582222, #3c1616);
+            border-color: #ff7a7a66;
+        }
+        
+        .warn:active {
+            background: linear-gradient(180deg, #4e1f1f, #2f1212);
+        }
+        /* Make = span two columns on tablet/desktop */
+        
+        .span-2 {
+            grid-column: span 2;
+        }
+        /* Bigger touch targets on small screens */
+        
+        @media (max-width: 520px) {
+            .calc-btn {
+                padding: 1rem .4rem;
+                font-size: 1.15rem;
+                border-radius: 14px;
+            }
+            .calc-input {
+                font-size: 1.75rem;
+            }
+        }
+        /* Blue neon hover on pointer devices (keeps your vibe) */
+        
+        @media (hover:hover) {
+            .calc-btn:hover {
+                box-shadow: 0 8px 24px rgba(0, 0, 0, .45), 0 0 12px #00aaffaa, 0 0 26px #00aaff55;
+                transform: translateY(-1px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <h1>Calculator</h1>
+        <nav class="top-nav"><a href="../index.html">Home</a></nav>
+    </header>
+
+    <main class="page">
+        <div class="calc-wrap">
+            <div class="calc-header">
+                <div class="calc-screen" id="screen" aria-live="polite">
+                    <div class="calc-history" id="history"></div>
+                    <div class="row" style="justify-content:flex-end;">
+                        <input id="scr" class="calc-input" inputmode="decimal" autocomplete="off" aria-label="Expression" placeholder="0" />
+                    </div>
+                </div>
+                <small>Tip: swipe left on the numbers to delete, press‑and‑hold <span class="kbd">Del</span> to rapidly erase, Enter/= to calculate.</small>
+            </div>
+
+            <div class="calc-grid" role="group" aria-label="Calculator keypad">
+                <!-- Row 1 -->
+                <button class="calc-btn warn" data-key="AC" aria-label="All Clear">AC</button>
+                <button class="calc-btn warn" data-key="C" aria-label="Clear Entry">C</button>
+                <button class="calc-btn op" data-key="%" aria-label="Percent">%</button>
+                <button class="calc-btn op" data-key="/" aria-label="Divide">÷</button>
+
+                <!-- Row 2 -->
+                <button class="calc-btn" data-key="7">7</button>
+                <button class="calc-btn" data-key="8">8</button>
+                <button class="calc-btn" data-key="9">9</button>
+                <button class="calc-btn op" data-key="*" aria-label="Multiply">×</button>
+
+                <!-- Row 3 -->
+                <button class="calc-btn" data-key="4">4</button>
+                <button class="calc-btn" data-key="5">5</button>
+                <button class="calc-btn" data-key="6">6</button>
+                <button class="calc-btn op" data-key="-" aria-label="Minus">−</button>
+
+                <!-- Row 4 -->
+                <button class="calc-btn" data-key="1">1</button>
+                <button class="calc-btn" data-key="2">2</button>
+                <button class="calc-btn" data-key="3">3</button>
+                <button class="calc-btn op" data-key="+" aria-label="Plus">+</button>
+
+                <!-- Row 5 -->
+                <button class="calc-btn" data-key="0">0</button>
+                <button class="calc-btn" data-key="." aria-label="Decimal">.</button>
+                <button class="calc-btn" id="del" aria-label="Delete">Del</button>
+                <button class="calc-btn accent" id="eq" data-key="=" aria-label="Equals">=</button>
+
+                <!-- Row 6 (extras) -->
+                <button class="calc-btn" data-key="(" aria-label="Left parenthesis">(</button>
+                <button class="calc-btn" data-key=")" aria-label="Right parenthesis">)</button>
+                <button class="calc-btn span-2" data-key="neg" aria-label="Toggle sign">±</button>
+            </div>
+        </div>
+    </main>
+
+    <script defer src="../assets/js/main.js"></script>
+    <script defer src="../assets/js/calculator.js"></script>
+</body>
+
+</html>

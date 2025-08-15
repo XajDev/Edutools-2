@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" data-page="net">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="../512.ico?v=2">
+    <link rel="apple-touch-icon" href="../512.ico?v=2">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Internet Check — EduTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+        .net-card {
+            display: grid;
+            gap: 1rem;
+            padding: 1rem;
+            font-size: 1.05rem;
+        }
+        
+        .net-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: .6rem .4rem;
+            background: #0b121a;
+            border-radius: 10px;
+            border: 1px solid #ffffff14;
+        }
+        
+        .net-label {
+            font-weight: bold;
+        }
+        
+        .net-value {
+            font-family: var(--mono);
+            background: #00000040;
+            padding: .3rem .6rem;
+            border-radius: 8px;
+            min-width: 90px;
+            text-align: center;
+        }
+        
+        .ping-button {
+            margin-top: .3rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <h1>Internet Check</h1>
+        <nav class="top-nav"><a href="../index.html">Home</a></nav>
+    </header>
+    <main class="page">
+        <div class="card net-card">
+            <div class="net-row">
+                <span class="net-label">Internet Status:</span>
+                <span id="status" class="net-value">—</span>
+            </div>
+            <div class="net-row">
+                <span class="net-label">Download Speed:</span>
+                <span id="down" class="net-value">—</span>
+            </div>
+            <div class="net-row">
+                <span class="net-label">Ping (Latency):</span>
+                <span id="rtt" class="net-value">—</span>
+            </div>
+            <div class="net-row">
+                <span class="net-label">Connection Type:</span>
+                <span id="type" class="net-value">—</span>
+            </div>
+            <div style="text-align:center;">
+            </div>
+        </div>
+    </main>
+    <script defer src="../assets/js/main.js"></script>
+    <script defer src="../assets/js/network-check.js"></script>
+</body>
+
+</html>

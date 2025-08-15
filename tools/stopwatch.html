@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en" data-page="stopwatch">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="../512.ico?v=2">
+    <link rel="apple-touch-icon" href="../512.ico?v=2">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Stopwatch & Timer — EduTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+        /* Tablet-friendly layout scoped to this page */
+        
+        .sw-wrap {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .sw-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        @media (min-width: 860px) {
+            .sw-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .card-xl {
+            padding: 1rem;
+            border: 1px solid #ffffff14;
+            border-radius: 18px;
+            background: #0b121a;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .display {
+            font: 700 2.8rem var(--mono);
+            letter-spacing: 0.5px;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 16px;
+            border: 1px solid #ffffff22;
+            background: #0f141c;
+            user-select: none;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: .75rem;
+        }
+        
+        .btn {
+            font: 600 1.05rem var(--sans);
+            padding: 1rem .9rem;
+            border-radius: 14px;
+            border: 1px solid #ffffff22;
+            background: linear-gradient(180deg, #121a24, #0b121a);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .35);
+            -webkit-tap-highlight-color: transparent;
+            transition: transform .06s ease, box-shadow .08s ease, background .12s ease;
+            touch-action: manipulation;
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .4);
+        }
+        
+        .btn.primary {
+            background: linear-gradient(180deg, #0e3d74, #0b315c);
+            border-color: #68b5ff77;
+        }
+        
+        .btn.ghost {
+            background: transparent;
+        }
+        
+        @media (hover:hover) {
+            .btn:hover {
+                box-shadow: 0 8px 24px rgba(0, 0, 0, .45), 0 0 12px #00aaffaa, 0 0 26px #00aaff55;
+                transform: translateY(-1px);
+            }
+        }
+        /* Laps */
+        
+        .laps {
+            max-height: 260px;
+            overflow: auto;
+            border: 1px solid #ffffff12;
+            border-radius: 12px;
+            background: #0f141c;
+            padding: .5rem;
+        }
+        
+        .lap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: .5rem .6rem;
+            border-radius: 10px;
+        }
+        
+        .lap:nth-child(odd) {
+            background: #0b121a;
+        }
+        
+        .lap small {
+            opacity: .8;
+        }
+        
+        .lap .num {
+            font-family: var(--mono);
+            opacity: .7;
+        }
+        /* Timer specific */
+        
+        .timer-set {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .75rem;
+        }
+        
+        .time-input {
+            display: grid;
+            gap: .3rem;
+        }
+        
+        .time-input label {
+            font-size: .9rem;
+            opacity: .85;
+        }
+        
+        .time-input input {
+            font: 700 1.4rem var(--mono);
+            padding: .9rem .8rem;
+            border-radius: 14px;
+            border: 1px solid #ffffff22;
+            background: #0f141c;
+            color: #fff;
+            text-align: center;
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: textfield;
+        }
+        
+        .timer-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: .75rem;
+        }
+        
+        .hint {
+            opacity: .7;
+            font-size: .9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <h1>Stopwatch & Timer</h1>
+        <nav class="top-nav"><a href="../index.html">Home</a></nav>
+    </header>
+
+    <main class="page">
+        <div class="sw-wrap">
+            <div class="sw-grid">
+                <!-- Stopwatch -->
+                <section class="card-xl" aria-label="Stopwatch">
+                    <h3>Stopwatch</h3>
+                    <div id="swDisplay" class="display" aria-live="polite">00:00.000</div>
+                    <div class="controls">
+                        <button id="swStart" class="btn primary">Start</button>
+                        <button id="swLap" class="btn">Lap</button>
+                        <button id="swReset" class="btn ghost">Reset</button>
+                    </div>
+                    <div class="hint">Tip: press <span class="kbd">Space</span> to Start/Pause, <span class="kbd">L</span> to Lap, <span class="kbd">R</span> to Reset.</div>
+                    <div id="laps" class="laps" aria-label="Lap times"></div>
+                </section>
+
+                <!-- Timer -->
+                <section class="card-xl" aria-label="Countdown Timer">
+                    <h3>Timer</h3>
+                    <div id="tmDisplay" class="display" aria-live="polite">00:00</div>
+
+                    <div class="timer-set">
+                        <div class="time-input">
+                            <label for="tMin">Minutes</label>
+                            <input id="tMin" type="number" inputmode="numeric" min="0" step="1" placeholder="0" />
+                        </div>
+                        <div class="time-input">
+                            <label for="tSec">Seconds</label>
+                            <input id="tSec" type="number" inputmode="numeric" min="0" step="1" placeholder="0" />
+                        </div>
+                    </div>
+
+                    <div class="timer-actions">
+                        <button class="btn" id="minusMin">−1m</button>
+                        <button class="btn" id="plusMin">+1m</button>
+                        <button class="btn" id="minusSec">−5s</button>
+                        <button class="btn" id="plusSec">+5s</button>
+
+                        <button class="btn" id="preset1">1:00</button>
+                        <button class="btn" id="preset3">3:00</button>
+                        <button class="btn" id="preset5">5:00</button>
+                        <button class="btn" id="preset10">10:00</button>
+                    </div>
+
+                    <div class="controls" style="grid-template-columns: repeat(2, 1fr);">
+                        <button id="tmStart" class="btn primary">Start</button>
+                        <button id="tmReset" class="btn ghost">Reset</button>
+                    </div>
+                    <div class="hint">Timer beeps softly at 0. (Haptics/vibrate where supported.)</div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script defer src="../assets/js/main.js"></script>
+    <script defer src="../assets/js/stopwatch.js"></script>
+</body>
+
+</html>
